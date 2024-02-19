@@ -16,28 +16,29 @@ const slides = [
 		"tagLine": "Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
-// const et let
+// const récupérer Eléments HTML
 
 const btnSlideLeft = document.querySelector(".arrow_left");
 const btnSlideRight = document.querySelector(".arrow_right");
-const dots = document.querySelectorAll(".dot_selected");
 const bannerImg = document.querySelector(".banner-img");
+const dots = document.querySelector(".dots");
 
-// function
+// fonction qui met à jour les images et textes
 let numero = 0;
 function changeSlide(sens) {
 	numero = numero + sens;
 	if (numero > slides.length - 1) {
-		numero = 0;	
+		numero = 0;
 	}
 	changeDot(-1)
 	if (numero < 0) {
-		numero = slides.length - 1;	
+		numero = slides.length - 1;
 	}
 	changeDot(1)
 	document.querySelector(".banner-img").src = `./assets/images/slideshow/${slides[numero].image}`;
 	document.querySelector(".services").innerHTML = slides[numero].tagLine;
 }
+// fonction qui met à jour la class dot selected
 
 function changeDot() {
 	const dots = document.querySelectorAll(".dot")
@@ -48,14 +49,29 @@ function changeDot() {
 			dot.classList.remove("dot_selected")
 	})
 }
+// boucle for qui crée les différentes div de dots
 
-// eventListener
+for (var i = 0; i < slides.length; i++) {
+	console.log(slides[i]);
+	const dot = document.createElement("div")
+	dot.classList.add("dot") 
+	dots.appendChild(dot)
+	if(i===numero) {
+		dot.classList.add("dot_selected")
+	}
+}
 
-btnSlideLeft.addEventListener("click", () => {
-	changeSlide(-1);
+// initialisation de la page
+function init() {
+	document.querySelector(".banner-img").src = `./assets/images/slideshow/${slides[numero].image}`;
+	document.querySelector(".services").innerHTML = slides[numero].tagLine;
+	btnSlideLeft.addEventListener("click", () => {
+		changeSlide(-1);
 
-})
-btnSlideRight.addEventListener("click", () => {
-	changeSlide(1);
+	})
+	btnSlideRight.addEventListener("click", () => {
+		changeSlide(1);
 
-})
+	})
+}
+init();
